@@ -1,8 +1,5 @@
 package com.agc.webservice.soap.producerapi.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 
 import com.agc.database.Transaction;
