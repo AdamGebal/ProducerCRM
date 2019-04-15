@@ -7,7 +7,7 @@ import com.agc.entity.Producer;
 public class TestDbConnection {
 	
 	public static void main(String[] args) {
-		SessionFactory sessionFactory = SessionFactoryProvider.getSessionFactory();
+		SessionFactory sessionFactory = SessionFactoryProvider.getInstance();
 		Session session = sessionFactory.getCurrentSession();
 		
 		Producer testProducer = new Producer("Baloise", "ag@basler.de");

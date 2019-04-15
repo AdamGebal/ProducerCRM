@@ -14,7 +14,7 @@ public class SessionFactoryProvider {
 	
 	private SessionFactoryProvider() {}
 	
-	public static SessionFactory getSessionFactory() {
+	public static synchronized SessionFactory getInstance() {
 		if(SESSION_FACTORY == null) {
 			init();
 		}

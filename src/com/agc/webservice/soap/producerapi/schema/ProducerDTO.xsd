@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.agc.com/ProducerDTO" 
+		xmlns:tns="http://www.agc.com/ProducerDTO"
+		xmlns:pc="http://www.agc.com/ProducerCodeDTO" 
+		elementFormDefault="qualified">
+		<import namespace="http://www.agc.com/ProducerCodeDTO" schemaLocation="ProducerCodeDTO.xsd"/>
+		
+    	<complexType name="ProducerDTO">
+    		<sequence>
+    			<element name="PublicID" type="string"/>
+    			<element name="Name" type="string"/>
+    			<element name="ProducerCodeDTO" type="pc:ProducerCodeDTO" maxOccurs="unbounded" minOccurs="0" />
+    		</sequence>
+    	</complexType>		
+		
+</schema>

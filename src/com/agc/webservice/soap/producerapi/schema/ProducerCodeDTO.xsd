@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.agc.com/ProducerCodeDTO" 
+		xmlns:tns="http://www.agc.com/ProducerCodeDTO" 
+		elementFormDefault="qualified">
+		
+		<complexType name="ProducerCodeDTO">
+    		<sequence>
+    			<element name="PublicID" type="string"/>
+    			<element name="Code" type="string"/>
+    		</sequence>
+    	</complexType>
+
+</schema>
