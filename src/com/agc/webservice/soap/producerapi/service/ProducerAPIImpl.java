@@ -22,13 +22,14 @@ public class ProducerAPIImpl implements ProducerAPI {
 		producerDTO.getPublicID();
 		producerDTO.getName();
 		Producer producer = new Producer(producerDTO.getPublicID(), producerDTO.getName(), producerDTO.getEmail());
-		List<ProducerCode> producerCodes = new ArrayList<>();
-		for(ProducerCodeDTO pcDTO : producerDTO.getProducerCodeDTO()) {
-			ProducerCode producerCode = new ProducerCode(pcDTO.getPublicID(), pcDTO.getCode());
-			producerCodes.add(producerCode);
-		}
 		
 		Transaction.saveEntity(producer);
+		
+		for(ProducerCodeDTO pcDTO : producerDTO.getProducerCodeDTO()) {
+			ProducerCode producerCode = new ProducerCode(pcDTO.getPublicID(), pcDTO.getCode());
+			producer.addProducerCode(producerCode);
+			Transaction.saveEntity(producerCode);
+		}
 		
 		logger.info("Producer " + producer.getName() + " saved to the database");
 		

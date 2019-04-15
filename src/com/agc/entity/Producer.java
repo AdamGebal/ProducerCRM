@@ -1,10 +1,16 @@
 package com.agc.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +30,12 @@ public class Producer {
 	
 	@Column(name="email", length=55, nullable=false)
 	private String email;
+	
+	@OneToMany( fetch=FetchType.EAGER,
+				mappedBy="producer",
+				cascade = {CascadeType.PERSIST, CascadeType.DETACH, 
+						   CascadeType.MERGE, CascadeType.REFRESH})
+	private List<ProducerCode> producerCodes;
 
 	public Producer(String publicID, String name, String email) {
 		this.publicID = publicID;
@@ -60,6 +72,22 @@ public class Producer {
 
 	public void setPublicID(String publicID) {
 		this.publicID = publicID;
+	}
+
+	public List<ProducerCode> getProducerCodes() {
+		return producerCodes;
+	}
+
+	public void setProducerCodes(List<ProducerCode> producerCodes) {
+		this.producerCodes = producerCodes;
+	}
+	
+	public void addProducerCode(ProducerCode producerCode) {
+		if(this.producerCodes == null) {
+			this.producerCodes = new ArrayList<>();
+		}
+		this.producerCodes.add(producerCode);
+		producerCode.setProducer(this);
 	}
 
 	

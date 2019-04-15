@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.agc.entity.Producer;
+import com.agc.entity.ProducerCode;
 
 public class SessionFactoryProvider {
 	
@@ -24,6 +25,7 @@ public class SessionFactoryProvider {
 	private static void init() {
 		SESSION_FACTORY = new Configuration().configure(CONFIGURATION_FILE)
 						   .addAnnotatedClass(Producer.class)
+						   .addAnnotatedClass(ProducerCode.class)
 						   .buildSessionFactory();
 	}
 	

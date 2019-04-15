@@ -11,6 +11,9 @@
 <h2>Producers</h2>
 <c:forEach var="producer" items="${producers}">
 <br/>${producer.name} - ${producer.email}
+	<c:forEach var="producerCode" items="${producer.producerCodes}">
+		<br/>====== ${producerCode.code}
+		</c:forEach>
 </c:forEach>
 <br/><br/>
 
