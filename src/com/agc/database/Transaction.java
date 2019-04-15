@@ -1,20 +1,17 @@
+package com.agc.database;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.agc.database.SessionFactoryProvider;
-import com.agc.entity.Producer;
-
-public class TestDbConnection {
+public class Transaction {
 	
-	public static void main(String[] args) {
+	public static void saveEntity(Object entity) {
 		SessionFactory sessionFactory = SessionFactoryProvider.getInstance();
 		Session session = sessionFactory.getCurrentSession();
 		
-		Producer testProducer = new Producer("id", "Baloise", "ag@basler.de");
-		
 		session.beginTransaction();
 		
-		session.save(testProducer);
+		session.save(entity);
 		
 		session.getTransaction().commit();
 	}

@@ -9,7 +9,7 @@ import com.agc.entity.Producer;
 
 public class SessionFactoryProvider {
 	
-	private static final String CONFIGURATION_FILE_PATH = "config/database/hibernate.cfg.xml";
+	private static final String CONFIGURATION_FILE = "database/hibernate.cfg.xml";
 	private static SessionFactory SESSION_FACTORY;
 	
 	private SessionFactoryProvider() {}
@@ -22,8 +22,7 @@ public class SessionFactoryProvider {
 	}
 	
 	private static void init() {
-		File configurationFile = new File(CONFIGURATION_FILE_PATH);
-		SESSION_FACTORY = new Configuration().configure(configurationFile)
+		SESSION_FACTORY = new Configuration().configure(CONFIGURATION_FILE)
 						   .addAnnotatedClass(Producer.class)
 						   .buildSessionFactory();
 	}
