@@ -37,6 +37,14 @@
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<testSourceDirectory>test</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>config</directory>
+			</resource>
+			<resource>
+				<directory>config/logging</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
