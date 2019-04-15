@@ -30,6 +30,9 @@ public class Producer {
 		this.name = name;
 		this.email = email;
 	}
+	
+	public Producer() {
+	}
 
 	public String getName() {
 		return name;
