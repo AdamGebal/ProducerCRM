@@ -1,107 +1,164 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-				  xmlns:tns="http://www.agc.com/ProducerAPI/" 
-				  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-				  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-				  xmlns:prod="http://www.agc.com/ProducerDTO"
-				  name="ProducerAPI" 
-				  targetNamespace="http://www.agc.com/ProducerAPI/">
-  <wsdl:types>
-    <xsd:schema targetNamespace="http://www.agc.com/ProducerAPI/">
-    <xsd:import namespace="http://www.agc.com/ProducerDTO" schemaLocation="../schema/ProducerDTO.xsd"/>
-    
-    	
-    	<xsd:element name="getProducer">
-    		<xsd:complexType>
-          		<xsd:sequence>
-            		<xsd:element name="producerPublicID" type="xsd:string"/>
-          		</xsd:sequence>
-        	</xsd:complexType>
-    	</xsd:element>
-    	
-    	<xsd:element name="getProducerResponse">
-    		<xsd:complexType>
-          		<xsd:sequence>
-            		<xsd:element name="producer" type="prod:ProducerDTO"/>
-          		</xsd:sequence>
-        	</xsd:complexType>
-    	</xsd:element>
-    
-    	<xsd:element name="createProducer">
-    		<xsd:complexType>
-          		<xsd:sequence>
-            		<xsd:element name="producer" type="prod:ProducerDTO"/>
-          		</xsd:sequence>
-        	</xsd:complexType>
-    	</xsd:element>
-    	
-    	<xsd:element name="createProducerResponse">
-    		<xsd:complexType>
-          		<xsd:sequence>
-            		<xsd:element name="result" type="xsd:boolean"/>
-          		</xsd:sequence>
-        	</xsd:complexType>
-    	</xsd:element>
-    	
-    </xsd:schema>
-    
-  </wsdl:types>
-  
-  <wsdl:message name="getProducer">
-    <wsdl:part element="tns:getProducer" name="parameters"/>
-  </wsdl:message>
-  
-  <wsdl:message name="getProducerResponse">
-    <wsdl:part element="tns:getProducerResponse" name="parameters"/>
-  </wsdl:message>
-  
-   <wsdl:message name="createProducer">
-    <wsdl:part element="tns:createProducer" name="parameters"/>
-  </wsdl:message>
-  
-  <wsdl:message name="createProducerResponse">
-    <wsdl:part element="tns:createProducerResponse" name="parameters"/>
-  </wsdl:message> 
+<wsdl:definitions
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.agc.com/ProducerAPI/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:prod="http://www.agc.com/ProducerDTO"
+	xmlns:prodCode="http://www.agc.com/ProducerCodeDTO" name="ProducerAPI"
+	targetNamespace="http://www.agc.com/ProducerAPI/">
+	<wsdl:types>
+		<xsd:schema
+			targetNamespace="http://www.agc.com/ProducerAPI/">
+			<xsd:import namespace="http://www.agc.com/ProducerDTO"
+				schemaLocation="../schema/ProducerDTO.xsd" />
+			<xsd:import namespace="http://www.agc.com/ProducerCodeDTO"
+				schemaLocation="../schema/ProducerCodeDTO.xsd" />
 
-  <wsdl:portType name="ProducerAPI">
-  
-    <wsdl:operation name="getProducer">
-      <wsdl:input message="tns:getProducer"/>
-      <wsdl:output message="tns:getProducerResponse"/>
-    </wsdl:operation>
-    
-    <wsdl:operation name="createProducer">
-      <wsdl:input message="tns:createProducer"/>
-      <wsdl:output message="tns:createProducerResponse"/>
-    </wsdl:operation>
-    
-  </wsdl:portType>
-  
-  
-  <wsdl:binding name="ProducerAPIBinding" type="tns:ProducerAPI">
-  
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    
-    <wsdl:operation name="getProducer">
-      <soap:operation soapAction="http://www.agc.com/ProducerAPI/getProducer"/>
-      <wsdl:input>
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    
-    <wsdl:operation name="createProducer">
-      <soap:operation soapAction="http://www.agc.com/ProducerAPI/createProducer"/>
-      <wsdl:input>
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    
-  </wsdl:binding>
-  
+			<xsd:element name="getProducer">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="producerPublicID" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="getProducerResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="producer" type="prod:ProducerDTO" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="createProducer">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="producer" type="prod:ProducerDTO" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="createProducerResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="result" type="xsd:boolean" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="createProducerCode">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="producerCode"
+							type="prodCode:ProducerCodeDTO" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="createProducerCodeResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="result" type="xsd:boolean" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+
+	</wsdl:types>
+
+	<wsdl:message name="getProducer">
+		<wsdl:part element="tns:getProducer" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="getProducerResponse">
+		<wsdl:part element="tns:getProducerResponse"
+			name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="createProducer">
+		<wsdl:part element="tns:createProducer" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="createProducerResponse">
+		<wsdl:part element="tns:createProducerResponse"
+			name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="createProducerCode">
+		<wsdl:part element="tns:createProducerCode"
+			name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="createProducerCodeResponse">
+		<wsdl:part element="tns:createProducerCodeResponse"
+			name="parameters" />
+	</wsdl:message>
+
+	<wsdl:portType name="ProducerAPI">
+
+		<wsdl:operation name="getProducer">
+			<wsdl:input message="tns:getProducer" />
+			<wsdl:output message="tns:getProducerResponse" />
+		</wsdl:operation>
+
+		<wsdl:operation name="createProducer">
+			<wsdl:input message="tns:createProducer" />
+			<wsdl:output message="tns:createProducerResponse" />
+		</wsdl:operation>
+
+		<wsdl:operation name="createProducerCode">
+			<wsdl:input message="tns:createProducerCode" />
+			<wsdl:output message="tns:createProducerCodeResponse" />
+		</wsdl:operation>
+
+	</wsdl:portType>
+
+
+	<wsdl:binding name="ProducerAPIBinding"
+		type="tns:ProducerAPI">
+
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+
+		<wsdl:operation name="getProducer">
+			<soap:operation
+				soapAction="http://www.agc.com/ProducerAPI/getProducer" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="createProducer">
+			<soap:operation
+				soapAction="http://www.agc.com/ProducerAPI/createProducer" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="createProducerCode">
+			<soap:operation
+				soapAction="http://www.agc.com/ProducerAPI/createProducerCode" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ProducerAPIService">
+		<wsdl:port binding="tns:ProducerAPIBinding"
+			name="ProducerAPIPort">
+			<soap:address
+				location="http://localhost:8008/ProducerCRM/services/ProducerAPI" />
+		</wsdl:port>
+	</wsdl:service>
 </wsdl:definitions>

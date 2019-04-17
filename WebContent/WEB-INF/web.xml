@@ -5,6 +5,10 @@
 	id="WebApp_ID" version="4.0">
 	<display-name>ProducerCRM</display-name>
 
+	<listener>
+    	<listener-class>com.agc.listener.CustomContextListener</listener-class>
+	</listener>
+	
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -36,5 +40,5 @@
     	<servlet-name>CXFServlet</servlet-name>
     	<url-pattern>/services/*</url-pattern>
   	</servlet-mapping>
-
+	
 </web-app>

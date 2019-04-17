@@ -21,7 +21,7 @@ public class MainController {
 	@RequestMapping("/producers")
 	public String showProducers(Model model) {
 		
-		List<Producer> producerList = (List<Producer>) Transaction.getEntities("Producer");
+		List<Producer> producerList = Transaction.getEntities("Producer", Producer.class);
 		model.addAttribute("producers", producerList);
 		return "producers";
 	}

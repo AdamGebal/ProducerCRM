@@ -13,16 +13,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.agc.entity.iface.IHavingPublicID;
+
 @Entity
 @Table(name = "producer")
-public class Producer {
+public class Producer implements IHavingPublicID {
 	
 	@Id
 	@Column(name="Id", unique=true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name="publicid", length=55, nullable=false)
+	@Column(name="publicid", length=55, nullable=false, unique=true)
 	private String publicID;
 	
 	@Column(name="name", length=55, nullable=false)
@@ -36,14 +38,14 @@ public class Producer {
 				cascade = {CascadeType.PERSIST, CascadeType.DETACH, 
 						   CascadeType.MERGE, CascadeType.REFRESH})
 	private List<ProducerCode> producerCodes;
-
+	
+	public Producer() {
+	}
+	
 	public Producer(String publicID, String name, String email) {
 		this.publicID = publicID;
 		this.name = name;
 		this.email = email;
-	}
-	
-	public Producer() {
 	}
 
 	public String getName() {
@@ -90,5 +92,9 @@ public class Producer {
 		producerCode.setProducer(this);
 	}
 
+	@Override
+	public String toString() {
+		return "Producer [publicID=" + publicID + ", name=" + name + ", email=" + email + "]";
+	}
 	
 }

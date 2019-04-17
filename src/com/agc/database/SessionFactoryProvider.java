@@ -13,7 +13,7 @@ public class SessionFactoryProvider {
 	
 	private SessionFactoryProvider() {}
 	
-	public static synchronized SessionFactory getInstance() {
+	public static SessionFactory getInstance() {
 		if(SESSION_FACTORY == null) {
 			init();
 		}

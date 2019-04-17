@@ -11,7 +11,6 @@
     			<element name="PublicID" type="string"/>
     			<element name="Name" type="string"/>
     			<element name="Email" type="string"/>
-    			<element name="ProducerCodeDTO" type="pc:ProducerCodeDTO" maxOccurs="unbounded" minOccurs="0" />
     		</sequence>
     	</complexType>		
 		
