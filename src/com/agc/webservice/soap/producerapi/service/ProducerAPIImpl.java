@@ -1,5 +1,6 @@
 package com.agc.webservice.soap.producerapi.service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
@@ -8,6 +9,7 @@ import com.agc.database.Transaction;
 import com.agc.entity.Producer;
 import com.agc.entity.ProducerCode;
 import com.agc.exception.EntityNotFoundException;
+import com.agc.policycommissiondto.PolicyCommissionDTO;
 import com.agc.producerapi.ProducerAPI;
 import com.agc.producercodedto.ProducerCodeDTO;
 import com.agc.producerdto.ProducerDTO;
@@ -66,6 +68,17 @@ public class ProducerAPIImpl implements ProducerAPI {
 		Transaction.saveEntity(producerCode);
 		
 		return true;
+	}
+
+	@Override
+	public PolicyCommissionDTO calculateCommissionRate(String producerCodePublicId, BigDecimal chargeAmount) {
+		ProducerCode producerCode = Transaction.getEntityBasedOnPublicID(ProducerCode.class, producerCodePublicId);	
+		BigDecimal commissionAmount = chargeAmount.multiply(producerCode.getCommissionRate()).divide(new BigDecimal(100));
+		PolicyCommissionDTO policyCommissionDTO = new PolicyCommissionDTO();
+		policyCommissionDTO.setProducerCodePublicID(producerCodePublicId);
+		policyCommissionDTO.setCommissionAmount(commissionAmount);
+		policyCommissionDTO.setCommissionRate(producerCode.getCommissionRate());
+		return policyCommissionDTO;
 	}
 
 }

@@ -10,7 +10,7 @@
     		<sequence>
     			<element name="PublicID" type="string"/>
     			<element name="Name" type="string"/>
-    			<element name="Email" type="string"/>
+    			<element name="Email" type="string" minOccurs="0" />
     		</sequence>
     	</complexType>		
 		

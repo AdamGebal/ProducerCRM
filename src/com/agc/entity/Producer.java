@@ -30,7 +30,7 @@ public class Producer implements IHavingPublicID {
 	@Column(name="name", length=55, nullable=false)
 	private String name;
 	
-	@Column(name="email", length=55, nullable=false)
+	@Column(name="email", length=55)
 	private String email;
 	
 	@OneToMany( fetch=FetchType.EAGER,

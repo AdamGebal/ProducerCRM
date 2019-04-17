@@ -5,8 +5,9 @@
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:prod="http://www.agc.com/ProducerDTO"
-	xmlns:prodCode="http://www.agc.com/ProducerCodeDTO" name="ProducerAPI"
-	targetNamespace="http://www.agc.com/ProducerAPI/">
+	xmlns:prodCode="http://www.agc.com/ProducerCodeDTO"
+	xmlns:polComm="http://www.agc.com/PolicyCommissionDTO"
+	name="ProducerAPI" targetNamespace="http://www.agc.com/ProducerAPI/">
 	<wsdl:types>
 		<xsd:schema
 			targetNamespace="http://www.agc.com/ProducerAPI/">
@@ -14,6 +15,9 @@
 				schemaLocation="../schema/ProducerDTO.xsd" />
 			<xsd:import namespace="http://www.agc.com/ProducerCodeDTO"
 				schemaLocation="../schema/ProducerCodeDTO.xsd" />
+			<xsd:import
+				namespace="http://www.agc.com/PolicyCommissionDTO"
+				schemaLocation="../schema/PolicyCommissionDTO.xsd" />
 
 			<xsd:element name="getProducer">
 				<xsd:complexType>
@@ -63,6 +67,25 @@
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
+
+			<xsd:element name="calculateCommissionRate">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="producerCodePublicId" type="xsd:string" />
+						<xsd:element name="chargeAmount" type="xsd:decimal" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="calculateCommissionRateResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="commissionRate"
+							type="polComm:PolicyCommissionDTO" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
 		</xsd:schema>
 
 	</wsdl:types>
@@ -95,6 +118,16 @@
 			name="parameters" />
 	</wsdl:message>
 
+	<wsdl:message name="calculateCommissionRate">
+		<wsdl:part element="tns:calculateCommissionRate"
+			name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="calculateCommissionRateResponse">
+		<wsdl:part element="tns:calculateCommissionRateResponse"
+			name="parameters" />
+	</wsdl:message>
+
 	<wsdl:portType name="ProducerAPI">
 
 		<wsdl:operation name="getProducer">
@@ -112,6 +145,10 @@
 			<wsdl:output message="tns:createProducerCodeResponse" />
 		</wsdl:operation>
 
+		<wsdl:operation name="calculateCommissionRate">
+			<wsdl:input message="tns:calculateCommissionRate" />
+			<wsdl:output message="tns:calculateCommissionRateResponse" />
+		</wsdl:operation>
 	</wsdl:portType>
 
 
@@ -153,7 +190,20 @@
 				<soap:body use="literal" />
 			</wsdl:output>
 		</wsdl:operation>
+		
+		<wsdl:operation name="calculateCommissionRate">
+			<soap:operation
+				soapAction="http://www.agc.com/ProducerAPI/calculateCommissionRate" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		
 	</wsdl:binding>
+	
 	<wsdl:service name="ProducerAPIService">
 		<wsdl:port binding="tns:ProducerAPIBinding"
 			name="ProducerAPIPort">
@@ -161,4 +211,5 @@
 				location="http://localhost:8008/ProducerCRM/services/ProducerAPI" />
 		</wsdl:port>
 	</wsdl:service>
+	
 </wsdl:definitions>
