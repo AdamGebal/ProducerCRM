@@ -44,6 +44,7 @@ public class ProducerAPIImpl implements ProducerAPI {
 		ProducerCode producerCode = new ProducerCode();
 		producerCode.setCode(producerCodeDTO.getCode());
 		producerCode.setPublicID(producerCodeDTO.getPublicID());
+		producerCode.setCommissionRate(producerCodeDTO.getCommissionRate());
 		String producerPublicID = producerCodeDTO.getProducerPublicId();
 		Producer producer = Transaction.getEntityBasedOnPublicID(Producer.class, producerPublicID);
 		if(producer != null) {

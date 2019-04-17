@@ -14,5 +14,6 @@ create table producer_code (
 	publicid varchar(55) not null unique,
 	code varchar(55) not null,
 	producer_id int foreign key references producer(id) not null,
-	parent_producer_code_id int foreign key references producer_code(id)
+	parent_producer_code_id int foreign key references producer_code(id),
+	commission_rate decimal not null
 )

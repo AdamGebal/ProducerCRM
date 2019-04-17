@@ -1,5 +1,6 @@
 package com.agc.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,9 @@ public class ProducerCode implements IHavingPublicID {
 				cascade = { CascadeType.PERSIST, CascadeType.DETACH,
 							CascadeType.MERGE, CascadeType.REFRESH })
 	private List<ProducerCode> childrenProducerCodes;
+	
+	@Column(name="commission_rate", precision = 5, scale = 2, nullable = false)
+	private BigDecimal commissionRate;
 
 	public ProducerCode() {
 	}
@@ -106,6 +110,14 @@ public class ProducerCode implements IHavingPublicID {
 	@Override
 	public String toString() {
 		return "ProducerCode [publicID=" + publicID + ", code=" + code + "]";
+	}
+
+	public BigDecimal getCommissionRate() {
+		return commissionRate;
+	}
+
+	public void setCommissionRate(BigDecimal commissionRate) {
+		this.commissionRate = commissionRate;
 	}
 	
 }
