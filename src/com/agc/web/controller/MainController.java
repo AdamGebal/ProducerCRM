@@ -1,4 +1,4 @@
-package com.agc.controller;
+package com.agc.web.controller;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@
 	<display-name>ProducerCRM</display-name>
 
 	<listener>
-    	<listener-class>com.agc.listener.CustomContextListener</listener-class>
+    	<listener-class>com.agc.web.listener.CustomContextListener</listener-class>
 	</listener>
 	
 	<servlet>
