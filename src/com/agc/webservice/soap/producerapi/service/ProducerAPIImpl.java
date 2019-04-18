@@ -1,7 +1,10 @@
 package com.agc.webservice.soap.producerapi.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -71,13 +74,43 @@ public class ProducerAPIImpl implements ProducerAPI {
 	}
 
 	@Override
-	public PolicyCommissionDTO calculateCommissionRate(String producerCodePublicId, BigDecimal chargeAmount) {
+	public List<PolicyCommissionDTO> calculateCommissionRates(String producerCodePublicId, BigDecimal chargeAmount) {
 		ProducerCode producerCode = Transaction.getEntityBasedOnPublicID(ProducerCode.class, producerCodePublicId);	
-		BigDecimal commissionAmount = chargeAmount.multiply(producerCode.getCommissionRate()).divide(new BigDecimal(100));
+		
+		LinkedList<ProducerCode> producerHierarchy = new LinkedList<>();
+		producerHierarchy.add(producerCode);
+		ProducerCode parentProducerCode = producerCode.getParentProducerCode();
+		while(parentProducerCode != null) {
+			producerHierarchy.add(parentProducerCode);
+			parentProducerCode = parentProducerCode.getParentProducerCode();
+		}
+				
+		List<PolicyCommissionDTO> policyCommissions = new ArrayList<>();
+		Integer positionInHierarchy = 1;
+		policyCommissions.add(calculateCommissionRate(producerCode, null, chargeAmount, positionInHierarchy));
+		
+		ProducerCode parentCode = producerCode.getParentProducerCode();
+		while(parentCode != null) {
+			policyCommissions.add(calculateCommissionRate(parentCode, producerCode, chargeAmount, ++positionInHierarchy));
+			parentCode = parentCode.getParentProducerCode();
+		}
+
+		return policyCommissions;
+	}
+	
+
+	private PolicyCommissionDTO calculateCommissionRate(ProducerCode producerCode, ProducerCode childCode, BigDecimal chargeAmount, Integer positionInHierarchy) {
+		BigDecimal commissionRate = producerCode.getCommissionRate();
+		if(childCode != null) {
+			commissionRate = commissionRate.subtract(childCode.getCommissionRate());
+		} 
+		
+		BigDecimal commissionAmount = chargeAmount.multiply(commissionRate).divide(new BigDecimal(100));
 		PolicyCommissionDTO policyCommissionDTO = new PolicyCommissionDTO();
-		policyCommissionDTO.setProducerCodePublicID(producerCodePublicId);
+		policyCommissionDTO.setProducerCodePublicID(producerCode.getPublicID());
 		policyCommissionDTO.setCommissionAmount(commissionAmount);
-		policyCommissionDTO.setCommissionRate(producerCode.getCommissionRate());
+		policyCommissionDTO.setCommissionRate(commissionRate);
+		policyCommissionDTO.setProducerRolePositionInHierarchy(positionInHierarchy);
 		return policyCommissionDTO;
 	}
 

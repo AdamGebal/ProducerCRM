@@ -68,7 +68,7 @@
 				</xsd:complexType>
 			</xsd:element>
 
-			<xsd:element name="calculateCommissionRate">
+			<xsd:element name="calculateCommissionRates">
 				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="producerCodePublicId" type="xsd:string" />
@@ -77,11 +77,11 @@
 				</xsd:complexType>
 			</xsd:element>
 
-			<xsd:element name="calculateCommissionRateResponse">
+			<xsd:element name="calculateCommissionRatesResponse">
 				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="commissionRate"
-							type="polComm:PolicyCommissionDTO" />
+							type="polComm:PolicyCommissionDTO" maxOccurs="unbounded"/>
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
@@ -118,13 +118,13 @@
 			name="parameters" />
 	</wsdl:message>
 
-	<wsdl:message name="calculateCommissionRate">
-		<wsdl:part element="tns:calculateCommissionRate"
+	<wsdl:message name="calculateCommissionRates">
+		<wsdl:part element="tns:calculateCommissionRates"
 			name="parameters" />
 	</wsdl:message>
 
-	<wsdl:message name="calculateCommissionRateResponse">
-		<wsdl:part element="tns:calculateCommissionRateResponse"
+	<wsdl:message name="calculateCommissionRatesResponse">
+		<wsdl:part element="tns:calculateCommissionRatesResponse"
 			name="parameters" />
 	</wsdl:message>
 
@@ -145,9 +145,9 @@
 			<wsdl:output message="tns:createProducerCodeResponse" />
 		</wsdl:operation>
 
-		<wsdl:operation name="calculateCommissionRate">
-			<wsdl:input message="tns:calculateCommissionRate" />
-			<wsdl:output message="tns:calculateCommissionRateResponse" />
+		<wsdl:operation name="calculateCommissionRates">
+			<wsdl:input message="tns:calculateCommissionRates" />
+			<wsdl:output message="tns:calculateCommissionRatesResponse" />
 		</wsdl:operation>
 	</wsdl:portType>
 
@@ -191,9 +191,9 @@
 			</wsdl:output>
 		</wsdl:operation>
 		
-		<wsdl:operation name="calculateCommissionRate">
+		<wsdl:operation name="calculateCommissionRates">
 			<soap:operation
-				soapAction="http://www.agc.com/ProducerAPI/calculateCommissionRate" />
+				soapAction="http://www.agc.com/ProducerAPI/calculateCommissionRates" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
