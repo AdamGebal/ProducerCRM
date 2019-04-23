@@ -14,9 +14,9 @@
     			<element name="PrimaryProducerCodePublicID" type="string" />
     			<element name="ChargeInfo" type="ci:ChargeInfoDTO" minOccurs="1" maxOccurs="unbounded"/>
     			<element name="Context" type="string" />
-    			<element name="PolicyStartDate" type="date" minOccurs="0" />
-    			<element name="PolicyEndDate" type="date" minOccurs="0" />
-    			<element name="EventDate" type="date" />
+    			<element name="PolicyStartDate" type="dateTime" minOccurs="0" />
+    			<element name="PolicyEndDate" type="dateTime" minOccurs="0" />
+    			<element name="EventDate" type="dateTime" />
     		</sequence>
     	</complexType>
 

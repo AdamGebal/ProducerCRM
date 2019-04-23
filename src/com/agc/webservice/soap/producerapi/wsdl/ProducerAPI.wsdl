@@ -71,25 +71,7 @@
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
-
-			<xsd:element name="calculateCommissionRates">
-				<xsd:complexType>
-					<xsd:sequence>
-						<xsd:element name="producerCodePublicId" type="xsd:string" />
-						<xsd:element name="chargeAmount" type="xsd:decimal" />
-					</xsd:sequence>
-				</xsd:complexType>
-			</xsd:element>
-
-			<xsd:element name="calculateCommissionRatesResponse">
-				<xsd:complexType>
-					<xsd:sequence>
-						<xsd:element name="commissionRates"
-							type="polCommInf:PolicyCommissionInfoDTO" maxOccurs="unbounded"/>
-					</xsd:sequence>
-				</xsd:complexType>
-			</xsd:element>
-			
+		
 			<xsd:element name="createPolicyCommission">
 				<xsd:complexType>
 					<xsd:sequence>
@@ -98,6 +80,14 @@
 				</xsd:complexType>
 			</xsd:element>
 
+			<xsd:element name="createPolicyCommissionResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="policyCommissionInfoDTO" type="polCommInf:PolicyCommissionInfoDTO" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
 		</xsd:schema>
 
 	</wsdl:types>
@@ -130,13 +120,13 @@
 			name="parameters" />
 	</wsdl:message>
 
-	<wsdl:message name="calculateCommissionRates">
-		<wsdl:part element="tns:calculateCommissionRates"
+	<wsdl:message name="createPolicyCommission">
+		<wsdl:part element="tns:createPolicyCommission"
 			name="parameters" />
 	</wsdl:message>
 
-	<wsdl:message name="calculateCommissionRatesResponse">
-		<wsdl:part element="tns:calculateCommissionRatesResponse"
+	<wsdl:message name="createPolicyCommissionResponse">
+		<wsdl:part element="tns:createPolicyCommissionResponse"
 			name="parameters" />
 	</wsdl:message>
 
@@ -157,9 +147,9 @@
 			<wsdl:output message="tns:createProducerCodeResponse" />
 		</wsdl:operation>
 
-		<wsdl:operation name="calculateCommissionRates">
-			<wsdl:input message="tns:calculateCommissionRates" />
-			<wsdl:output message="tns:calculateCommissionRatesResponse" />
+		<wsdl:operation name="createPolicyCommission">
+			<wsdl:input message="tns:createPolicyCommission" />
+			<wsdl:output message="tns:createPolicyCommissionResponse" />
 		</wsdl:operation>
 	</wsdl:portType>
 
@@ -203,9 +193,9 @@
 			</wsdl:output>
 		</wsdl:operation>
 		
-		<wsdl:operation name="calculateCommissionRates">
+		<wsdl:operation name="createPolicyCommission">
 			<soap:operation
-				soapAction="http://www.agc.com/ProducerAPI/calculateCommissionRates" />
+				soapAction="http://www.agc.com/ProducerAPI/createPolicyCommission" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>

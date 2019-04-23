@@ -1,7 +1,9 @@
 package com.agc.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.agc.entity.iface.IHavingPublicID;
@@ -41,11 +44,14 @@ public class ProducerCode implements IHavingPublicID {
 	@JoinColumn(name = "parent_producer_code_id")
 	private ProducerCode parentProducerCode;
 
-	@OneToMany(	fetch = FetchType.LAZY, 
+	@OneToMany(	fetch = FetchType.EAGER, 
 				mappedBy = "parentProducerCode", 
 				cascade = { CascadeType.PERSIST, CascadeType.DETACH,
 							CascadeType.MERGE, CascadeType.REFRESH })
-	private List<ProducerCode> childrenProducerCodes;
+	private Set<ProducerCode> childrenProducerCodes;
+	
+	@OneToOne( mappedBy = "producerCode" )
+	private IndividualCommissionPlan individualCommissionPlan;
 	
 	public ProducerCode() {
 	}
@@ -87,18 +93,18 @@ public class ProducerCode implements IHavingPublicID {
 		this.parentProducerCode = parentProducerCode;
 	}
 
-	public List<ProducerCode> getChildrenProducerCodes() {
+	public Set<ProducerCode> getChildrenProducerCodes() {
 		return childrenProducerCodes;
 	}
 
-	public void setChildrenProducerCodes(List<ProducerCode> childrenProducerCodes) {
+	public void setChildrenProducerCodes(Set<ProducerCode> childrenProducerCodes) {
 		this.childrenProducerCodes = childrenProducerCodes;
 	}
 	
 	public void addChildProducerCode(ProducerCode childProducerCode) {
 		childProducerCode.setParentProducerCode(this);
 		if(this.childrenProducerCodes == null) {
-			this.childrenProducerCodes = new ArrayList<>();
+			this.childrenProducerCodes = new HashSet<>();
 		}
 		this.childrenProducerCodes.add(childProducerCode);	
 	}
@@ -106,6 +112,14 @@ public class ProducerCode implements IHavingPublicID {
 	@Override
 	public String toString() {
 		return "ProducerCode [publicID=" + publicID + ", code=" + code + "]";
+	}
+
+	public IndividualCommissionPlan getIndividualCommissionPlan() {
+		return individualCommissionPlan;
+	}
+
+	public void setIndividualCommissionPlan(IndividualCommissionPlan individualCommissionPlan) {
+		this.individualCommissionPlan = individualCommissionPlan;
 	}
 	
 }

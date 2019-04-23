@@ -1,7 +1,9 @@
 package com.agc.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,10 +30,10 @@ public class IndividualCommissionPlan {
 	@JoinColumn( name = "producer_code_id" )
 	private ProducerCode producerCode;
 
-	@OneToMany(	fetch = FetchType.LAZY, 
+	@OneToMany(	fetch = FetchType.EAGER, 
 				mappedBy = "individualCommissionPlan", 
 				cascade = CascadeType.ALL)
-	private List<ChargePatternCommissionRate> chargePatternCommissionRates;
+	private Set<ChargePatternCommissionRate> chargePatternCommissionRates;
 
 	public ProducerCode getProducerCode() {
 		return producerCode;
@@ -41,18 +43,18 @@ public class IndividualCommissionPlan {
 		this.producerCode = producerCode;
 	}
 
-	public List<ChargePatternCommissionRate> getChargePatternCommissionRates() {
+	public Set<ChargePatternCommissionRate> getChargePatternCommissionRates() {
 		return chargePatternCommissionRates;
 	}
 
-	public void setChargePatternCommissionRates(List<ChargePatternCommissionRate> chargePatternCommissionRates) {
+	public void setChargePatternCommissionRates(Set<ChargePatternCommissionRate> chargePatternCommissionRates) {
 		this.chargePatternCommissionRates = chargePatternCommissionRates;
 	}
 
 	public void addChargePatternCommissionRate(ChargePatternCommissionRate chargePatternCommissionRate) {
 		chargePatternCommissionRate.setIndividualCommissionPlan(this);;
 		if(this.chargePatternCommissionRates == null) {
-			this.chargePatternCommissionRates = new ArrayList<>();
+			this.chargePatternCommissionRates = new HashSet<>();
 		}
 		this.chargePatternCommissionRates.add(chargePatternCommissionRate);	
 	}

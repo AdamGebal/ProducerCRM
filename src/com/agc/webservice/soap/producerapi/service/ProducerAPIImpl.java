@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.agc.chargeinfodto.ChargeInfoDTO;
 import com.agc.chargepatternratedto.ChargePatternRateDTO;
 import com.agc.database.Transaction;
 import com.agc.entity.ChargePatternCommissionRate;
@@ -15,6 +16,7 @@ import com.agc.entity.Producer;
 import com.agc.entity.ProducerCode;
 import com.agc.exception.EntityNotFoundException;
 import com.agc.individualcommissionplandto.IndividualCommissionPlanDTO;
+import com.agc.policycommissiondto.PolicyCommissionDTO;
 import com.agc.policycommissioninfodto.PolicyCommissionInfoDTO;
 import com.agc.producerapi.ProducerAPI;
 import com.agc.producercodedto.ProducerCodeDTO;
@@ -92,9 +94,35 @@ public class ProducerAPIImpl implements ProducerAPI {
 		
 		return true;
 	}
-
+	
 	@Override
-	public List<PolicyCommissionInfoDTO> calculateCommissionRates(String producerCodePublicId, BigDecimal chargeAmount) {
+	public List<PolicyCommissionInfoDTO> createPolicyCommission(PolicyCommissionDTO policyCommission) {
+		ProducerCode producerCode = Transaction.getEntityBasedOnPublicID(ProducerCode.class, policyCommission.getPrimaryProducerCodePublicID());
+		
+		LinkedList<ProducerCode> producerHierarchy = new LinkedList<>();
+		producerHierarchy.add(producerCode);
+		ProducerCode parentProducerCode = producerCode.getParentProducerCode();
+		while(parentProducerCode != null) {
+			producerHierarchy.add(parentProducerCode);
+			parentProducerCode = parentProducerCode.getParentProducerCode();
+		}
+		
+		List<PolicyCommissionInfoDTO> policyCommissions = new ArrayList<>();
+		Integer positionInHierarchy = 1;
+		for(ChargeInfoDTO chargeInfoDTO : policyCommission.getChargeInfo()) {
+			policyCommissions.add(calculateCommissionRate(producerCode, null, chargeInfoDTO.getAmount(), chargeInfoDTO.getChargePattern(), positionInHierarchy));
+			ProducerCode parentCode = producerCode.getParentProducerCode();
+			while(parentCode != null) {
+				policyCommissions.add(calculateCommissionRate(parentCode, producerCode, chargeInfoDTO.getAmount(), chargeInfoDTO.getChargePattern(), ++positionInHierarchy));
+				parentCode = parentCode.getParentProducerCode();
+			}
+		}
+		
+		return policyCommissions;
+	}
+
+
+//	public List<PolicyCommissionInfoDTO> calculateCommissionRates(String producerCodePublicId, BigDecimal chargeAmount) {
 //		ProducerCode producerCode = Transaction.getEntityBasedOnPublicID(ProducerCode.class, producerCodePublicId);	
 //		
 //		LinkedList<ProducerCode> producerHierarchy = new LinkedList<>();
@@ -116,24 +144,43 @@ public class ProducerAPIImpl implements ProducerAPI {
 //		}
 //
 //		return policyCommissions;
-		return null;
+//	}
+//	
+//
+	private PolicyCommissionInfoDTO calculateCommissionRate(ProducerCode producerCode, 
+															ProducerCode childCode, 
+															BigDecimal chargeAmount, 
+															String chargePattern, 
+															Integer positionInHierarchy) {
+		
+		BigDecimal commissionRate = producerCode.getIndividualCommissionPlan()
+												.getChargePatternCommissionRates()
+												.stream()
+												.filter( c -> c.getChargePattern().equalsIgnoreCase(chargePattern))
+												.findFirst()
+												.get()
+												.getCommissionRate();
+		
+		if(childCode != null) {
+			BigDecimal childProducerCodeRate = childCode.getIndividualCommissionPlan()
+												.getChargePatternCommissionRates()
+												.stream()
+												.filter( c -> c.getChargePattern().equalsIgnoreCase(chargePattern))
+												.findFirst()
+												.get()
+												.getCommissionRate();
+			commissionRate = commissionRate.subtract(childProducerCodeRate);
+		} 
+		
+		BigDecimal commissionAmount = chargeAmount.multiply(commissionRate).divide(new BigDecimal(100));
+		PolicyCommissionInfoDTO policyCommissionInfoDTO = new PolicyCommissionInfoDTO();
+		policyCommissionInfoDTO.setProducerCodePublicID(producerCode.getPublicID());
+		policyCommissionInfoDTO.setCommissionAmount(commissionAmount);
+		policyCommissionInfoDTO.setProducerRolePositionInHierarchy(positionInHierarchy);
+		policyCommissionInfoDTO.setChargePattern(chargePattern);
+		return policyCommissionInfoDTO;
 	}
-	
 
-	private PolicyCommissionInfoDTO calculateCommissionRate(ProducerCode producerCode, ProducerCode childCode, BigDecimal chargeAmount, Integer positionInHierarchy) {
-//		BigDecimal commissionRate = producerCode.getCommissionRate();
-//		if(childCode != null) {
-//			commissionRate = commissionRate.subtract(childCode.getCommissionRate());
-//		} 
-//		
-//		BigDecimal commissionAmount = chargeAmount.multiply(commissionRate).divide(new BigDecimal(100));
-//		PolicyCommissionInfoDTO policyCommissionInfoDTO = new PolicyCommissionInfoDTO();
-//		policyCommissionInfoDTO.setProducerCodePublicID(producerCode.getPublicID());
-//		policyCommissionInfoDTO.setCommissionAmount(commissionAmount);
-//		//policyCommissionDTO.setCommissionRate(commissionRate);
-//		policyCommissionInfoDTO.setProducerRolePositionInHierarchy(positionInHierarchy);
-//		return policyCommissionInfoDTO;
-		return null;
-	}
+
 
 }
