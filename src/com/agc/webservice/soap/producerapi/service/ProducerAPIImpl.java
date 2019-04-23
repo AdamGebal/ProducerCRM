@@ -108,8 +108,9 @@ public class ProducerAPIImpl implements ProducerAPI {
 		}
 		
 		List<PolicyCommissionInfoDTO> policyCommissions = new ArrayList<>();
-		Integer positionInHierarchy = 1;
+		
 		for(ChargeInfoDTO chargeInfoDTO : policyCommission.getChargeInfo()) {
+			Integer positionInHierarchy = 1;
 			policyCommissions.add(calculateCommissionRate(producerCode, null, chargeInfoDTO.getAmount(), chargeInfoDTO.getChargePattern(), positionInHierarchy));
 			ProducerCode parentCode = producerCode.getParentProducerCode();
 			while(parentCode != null) {
