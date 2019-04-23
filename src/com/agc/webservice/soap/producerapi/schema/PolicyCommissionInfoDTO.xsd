@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.agc.com/PolicyCommissionInfoDTO" 
+		xmlns:tns="http://www.agc.com/PolicyCommissionInfoDTO" 
+		elementFormDefault="qualified">
+		
+		<complexType name="PolicyCommissionInfoDTO">
+    		<sequence>
+    			<element name="ProducerCodePublicID" type="string" />
+    			<element name="ProducerRolePositionInHierarchy" type="int" />
+    			<element name="CommissionAmount" type="decimal" />
+    		</sequence>
+    	</complexType>
+
+</schema>

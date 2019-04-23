@@ -2,15 +2,18 @@
 <schema xmlns="http://www.w3.org/2001/XMLSchema" 
 		targetNamespace="http://www.agc.com/ProducerCodeDTO" 
 		xmlns:tns="http://www.agc.com/ProducerCodeDTO" 
+		xmlns:icp="http://www.agc.com/IndividualCommissionPlanDTO"
 		elementFormDefault="qualified">
-		
+		<import namespace="http://www.agc.com/IndividualCommissionPlanDTO"
+				schemaLocation="IndividualCommissionPlanDTO.xsd" />
+				
 		<complexType name="ProducerCodeDTO">
     		<sequence>
     			<element name="PublicID" type="string" />
     			<element name="Code" type="string" />
     			<element name="ProducerPublicId" type="string" />
     			<element name="ParentProducerCodePublicId" type="string" minOccurs="0" />
-    			<element name="CommissionRate" type="decimal" />
+    			<element name="IndividualCommissionPlan" type="icp:IndividualCommissionPlanDTO" />
     		</sequence>
     	</complexType>
 

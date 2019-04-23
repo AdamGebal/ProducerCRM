@@ -7,6 +7,7 @@
 	xmlns:prod="http://www.agc.com/ProducerDTO"
 	xmlns:prodCode="http://www.agc.com/ProducerCodeDTO"
 	xmlns:polComm="http://www.agc.com/PolicyCommissionDTO"
+	xmlns:polCommInf="http://www.agc.com/PolicyCommissionInfoDTO"
 	name="ProducerAPI" targetNamespace="http://www.agc.com/ProducerAPI/">
 	<wsdl:types>
 		<xsd:schema
@@ -18,6 +19,9 @@
 			<xsd:import
 				namespace="http://www.agc.com/PolicyCommissionDTO"
 				schemaLocation="../schema/PolicyCommissionDTO.xsd" />
+			<xsd:import
+				namespace="http://www.agc.com/PolicyCommissionInfoDTO"
+				schemaLocation="../schema/PolicyCommissionInfoDTO.xsd" />
 
 			<xsd:element name="getProducer">
 				<xsd:complexType>
@@ -80,8 +84,16 @@
 			<xsd:element name="calculateCommissionRatesResponse">
 				<xsd:complexType>
 					<xsd:sequence>
-						<xsd:element name="commissionRate"
-							type="polComm:PolicyCommissionDTO" maxOccurs="unbounded"/>
+						<xsd:element name="commissionRates"
+							type="polCommInf:PolicyCommissionInfoDTO" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="createPolicyCommission">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="policyCommission" type="polComm:PolicyCommissionDTO" />
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
