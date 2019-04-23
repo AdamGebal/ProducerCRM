@@ -13,7 +13,7 @@
     			<element name="Code" type="string" />
     			<element name="ProducerPublicId" type="string" />
     			<element name="ParentProducerCodePublicId" type="string" minOccurs="0" />
-    			<element name="IndividualCommissionPlan" type="icp:IndividualCommissionPlanDTO" />
+    			<element name="IndividualCommissionPlanDTO" type="icp:IndividualCommissionPlanDTO" />
     		</sequence>
     	</complexType>
 

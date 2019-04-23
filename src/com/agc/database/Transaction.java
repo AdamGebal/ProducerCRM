@@ -40,12 +40,12 @@ public class Transaction {
 		try {
 			for(Object entity : entities) {
 				session.save(entity);
-			}
-			session.getTransaction().commit();
+			}	
 		} catch(Exception e){
 			logger.error(e.getMessage() + " | " + entities.toString());
 			throw new RuntimeException(e);
 		} finally {
+			session.getTransaction().commit();
 			session.close();
 		}
 	}

@@ -3,6 +3,8 @@ package com.agc.database;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.agc.entity.ChargePatternCommissionRate;
+import com.agc.entity.IndividualCommissionPlan;
 import com.agc.entity.Producer;
 import com.agc.entity.ProducerCode;
 
@@ -24,6 +26,8 @@ public class SessionFactoryProvider {
 		SESSION_FACTORY = new Configuration().configure(CONFIGURATION_FILE)
 						   .addAnnotatedClass(Producer.class)
 						   .addAnnotatedClass(ProducerCode.class)
+						   .addAnnotatedClass(IndividualCommissionPlan.class)
+						   .addAnnotatedClass(ChargePatternCommissionRate.class)
 						   .buildSessionFactory();
 	}
 	

@@ -9,7 +9,7 @@
 				
 		<complexType name="IndividualCommissionPlanDTO">
     		<sequence>
-    			<element name="ChargePatternRate" type="cpr:ChargePatternRateDTO" minOccurs="1" maxOccurs="unbounded"/>
+    			<element name="ChargePatternRateDTO" type="cpr:ChargePatternRateDTO" minOccurs="1" maxOccurs="unbounded"/>
     		</sequence>
     	</complexType>
 
